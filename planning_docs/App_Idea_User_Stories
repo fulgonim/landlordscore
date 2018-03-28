@@ -1,0 +1,29 @@
+Name: LandLordScore
+
+App Purpose
+			Users can rate, review and research past, present and future landlords in their lives.
+
+User Stories
+
+As a user, I should be able to...
+
+1. Sign up for LandLordScore as a tenant (or landlord?)
+2. log in to LandLordScore
+3. View all entries by:
+	- Landlord
+	- Address
+	- Score (thumbs up, thumbs down, thumbs neutral)
+4. Search entries by:
+	- Landlord
+	- Address
+	- Score
+5. Create a new entry for a current or past address/landlord
+6. Update an entry already created (by myself or someone else) with my experience or edits
+7. Rate a landlord on a series of criteria
+8. Leave comments about a particular landlord
+
+Nice-to-haves:
+9. Be a landlord and respond to comments
+10. Initiate private correspondence with (landlords)/other tenants
+11. Get additional information about an address
+12. View advice about developing and maintaining a good relationship with your tenant/landlord

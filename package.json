@@ -1,0 +1,18 @@
+{
+  "name": "landlordscore",
+  "version": "1.0.0",
+  "description": "LandLordScore App",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "fulgonim",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
