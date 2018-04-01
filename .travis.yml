@@ -4,6 +4,6 @@ deploy:
   provider: heroku
   api_key:
     secure: ReFjus7fDpuWSpurWoe/qbuHX5MGtt/Nx9f74YAe/z0vmKtAF+j2R75fuzxHpx6xvAArOxIu3gpJiQhb3PLuV57Nan00E9P/NQbOS6YaPn5bDK7BTdXy5vKAhpkpu5Ee1QUs5JxjkCAZXTZ0ZFithNLMrzem4KyY1gQu5KncUA5krJm+61vLloDQIPbt1G4p90Jl9v1Se3ZLGxywyEKy5hId8yvyU+y+wVMqPkVh1kjrN2CdPCosmGqR6V1gry7GQ1CEKk9bFrjomortrM1QB3olodfVH+nK8jWsHQP0k3R6aC5GejAh1xqvbWjLtppEAsWnnq4ymFWjjUzL3hXpiQwsXJPAdmu31pBnCFApFwIoy0ySip11CnbNh6/Rr5AxlVOP5SZybidcF/xzWEko2dYesTXLzLnoCX9eZC2iIUretHsmYWmQ57Z+8VC4nhCucnGT6InyAqemlR8Y4ZOJ85/7V21VT3c81KmHRBR9Z25cGJ737jl1mWTv1fT0NE7cTlWCWX3W29Wv+tnpoYq6QEoB6RQGXQDOZvxz9XM4DSDpHgEO7K0H1CxiEt2WIBobiUeVolm2y66JjWJ9H92ksgjuONR1TSUSzV6E+jWDYQ8J9AvapMBchT/AuZ4A26euFsIqswM0IAcpZHk6f5Mq6YIHsFHq1RejIeY853aaWRY=
-  app: ⬢ cherry-cupcake-62164
+  app: https://cherry-cupcake-62164.herokuapp.com/
   on:
     repo: fulgonim/landlordscore
