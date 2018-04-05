@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const bycrypt = require('bycryptjs');
+const bycrypt = require('bcryptjs');
 
 //make mongoose promises ES6 promises
 mongoose.Promise = global.Promise;
@@ -10,7 +10,6 @@ mongoose.Promise = global.Promise;
 const UserSchema = mongoose.Schema({
 	username: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
-	joindate: {type: Date, required: true},
 	entries: [],
 	selfDescription: {type: String}
 });

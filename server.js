@@ -20,9 +20,15 @@ const app = express();
 app.use(morgan('common'));
 
 // router
+const {userRouter} = require('./routers');
+app.use('/users', userRouter);
+
+// HTML for splash page
+//app.use(express.static('views'));
 
 
-app.use(express.static('views'));
+let server;
+
 
 function runServer(databaseUrl, port = PORT) {
 	return new Promise((resolve, reject) => {

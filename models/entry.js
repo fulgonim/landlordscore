@@ -15,6 +15,7 @@ const entrySchema = mongoose.Schema({
 		{zipcode: {type: String, required: true}}
 		],
 	
+
 	author: {type: String, required: true},
 	landlord: {type: String, required: true},
 	postDate: {type: Date, required: true},
@@ -22,7 +23,8 @@ const entrySchema = mongoose.Schema({
 	responsive: {type: Boolean, required: true},
 	renew: {type: Boolean, required: true},
 	comments: {type: String}
-	//LOCATION IMAGE?
+	//LOCATION IMAGE? - save image location in the assets folder
+	// locationImage: {type: String} - this is a path blah/blahblah/images/123.jpeg
 });
 
 entrySchema.virtual('address').get(function() {
@@ -32,7 +34,7 @@ entrySchema.virtual('address').get(function() {
 entrySchema.methods.serialize = function() {
 	return {
 		id: this._id,
-		location: this.location,
+		location: this.address,
 		author: this.author,
 		landlord: this.landlord,
 		postDate: this.postDate,
@@ -47,3 +49,5 @@ entrySchema.methods.serialize = function() {
 const Entry = mongoose.model('Entry', entrySchema);
 
 module.exports = {Entry};
+
+
