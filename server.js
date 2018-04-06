@@ -2,15 +2,22 @@
 
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const passport = require('passport');
 
 //jsonParser import to read req/res data - will need to shift to routers eventually
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const morgan = require('morgan');
+// routers
+const {userRouter, authRouter} = require('./routers');
+app.use('/users', userRouter);
+
+const {}
+
 
 const {DATABASE_URL, PORT} = require('./config');
 
@@ -19,9 +26,12 @@ const app = express();
 //Logs
 app.use(morgan('common'));
 
-// router
-const {userRouter} = require('./routers');
-app.use('/users', userRouter);
+// passport strategies
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+
+
 
 // HTML for splash page
 //app.use(express.static('views'));

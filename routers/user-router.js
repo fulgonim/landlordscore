@@ -10,6 +10,9 @@ const jsonParser = bodyParser.json();
 
 router.use(jsonParser);
 
+
+
+
 // Post to register a new user
 
 /* 
@@ -19,7 +22,8 @@ router.post('/', jsonParser, (req, res) => {
 
 */
 
-// get all users
+// get all users DELETE THIS BEFORE FINALIZING
+
 router.get('/all-users', (req, res) => {
 	return User.find()
 		.then(users => res.json(users.map(user => user.serialize())))
