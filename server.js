@@ -12,11 +12,9 @@ const jsonParser = bodyParser.json();
 
 mongoose.Promise = global.Promise;
 
-// routers
+// import routers
 const {userRouter, authRouter} = require('./routers');
-app.use('/users', userRouter);
-
-const {}
+const {localStrategy, jwtStrategy} = require('./auth');
 
 
 const {DATABASE_URL, PORT} = require('./config');
@@ -30,6 +28,11 @@ app.use(morgan('common'));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+
+app.use('/api/users/', userRouter);
+app.use('/api/auth/', authRouter)
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
 
 

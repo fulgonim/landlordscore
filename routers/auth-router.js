@@ -12,7 +12,7 @@ const createAuthToken = function(user) {
 		subject: user.username,
 		expiresIn: config.JWT_EXPIRY,
 		algorithm: 'HS256'
-	})''
+	});
 };
 
 const localAuth = passport.authenticate('local', {session: false});
