@@ -5,20 +5,19 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const entrySchema = mongoose.Schema({
-	location: [
-		{streetNumber: {type: String, required: true}},
-		{streetName: {type: String, required: true}},
-		{city: {type: String, required: true}},
-		{county: {type: String}},
-		{stateOrRegion: {type: String, required: true}},
-		{country: {type: String, required: true}},
-		{zipcode: {type: String, required: true}}
-		],
+	location: {
+		streetNumber: {type: String, required: true},
+		streetName: {type: String, required: true},
+		city: {type: String, required: true},
+		stateOrRegion: {type: String, required: true},
+		country: {type: String, required: true},
+		zipcode: {type: String, required: true}
+		},
 	
+	author: {type: Object, required: true},
 
-	author: {type: String, required: true},
 	landlord: {type: String, required: true},
-	postDate: {type: Date, required: true},
+	postDate: {type: Date, required: true, default: Date.now},
 	reasonable: {type: Boolean, required: true},
 	responsive: {type: Boolean, required: true},
 	renew: {type: Boolean, required: true},
@@ -28,7 +27,12 @@ const entrySchema = mongoose.Schema({
 });
 
 entrySchema.virtual('address').get(function() {
-	return `${this.location[0]} ${this.location[1]} ${this.location[2]} ${this.location[4]} ${this.location[5]} ${this.location[6]}`.trim();
+	return `${this.location.streetNumber} 
+					${this.location.streetName} 
+					${this.location.city} 
+					${this.location.stateOrRegion} 
+					${this.location.country} 
+					${this.location.zipcode}`.trim();
 });
 
 entrySchema.methods.serialize = function() {

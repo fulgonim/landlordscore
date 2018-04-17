@@ -13,7 +13,7 @@ const jsonParser = bodyParser.json();
 mongoose.Promise = global.Promise;
 
 // import routers
-const {userRouter, authRouter} = require('./routers');
+const {userRouter, authRouter, entryRouter} = require('./routers');
 const {localStrategy, jwtStrategy} = require('./auth');
 
 
@@ -30,14 +30,29 @@ passport.use(jwtStrategy);
 
 
 app.use('/api/users/', userRouter);
-app.use('/api/auth/', authRouter)
+app.use('/api/auth/', authRouter);
+app.use('/api/entries', entryRouter);
+
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+});
 
 
-// HTML for splash page
-//app.use(express.static('views'));
+//initial endpoint to show HTML splash page
+app.get('/', function(req, res) {
+	res.sendFile(__dirname + '/views/index.html');
+});
+
+
 
 
 let server;

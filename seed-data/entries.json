@@ -1,0 +1,24 @@
+{
+	"location": {
+		"streetNumber": "449",
+		"streetName": "Grand Street",
+		"city": "Brooklyn",
+		"county": "Kings",
+		"stateOrRegion": "New York",
+		"country": "United States of America",
+		"zipcode": "11211"
+	},
+	
+	"author": {
+		"username": "user2",
+		"password": "54321",
+		"entries": ["this is my first rating ever", "this is my second rating ever"],
+		"selfDescription": "I am super great just like user1"
+	},
+	"landlord": "John Smith",
+	"postDate": "February 15, 2018",
+	"reasonable": true,
+	"responsive": false,
+	"renew": true,
+	"comments": "He was an okay landlord, no huge complaints, just not that responsive"
+}

@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const {User} = require('./../models');
 
@@ -10,9 +11,20 @@ const jsonParser = bodyParser.json();
 
 router.use(jsonParser);
 
+// GET endpoint to show login page
+router.get('/register', function(req, res) {
+	res.sendFile(path.join(__dirname, '../views/register.html'));
+});
+
+
+// GET endpoint to show dashboard once user is logged in (authenticated and authorized)
+router.get('/dashboard', function(req, res) {
+	res.sendFile(path.join(__dirname, '../views/dashboard.html'));
+});
+
 // Post to register a new user
 
-router.post('/', jsonParser, (req, res) => {
+router.post('/register', jsonParser, (req, res) => {
 	const requiredFields = ['username', 'password'];
 	const missingField = requiredFields.find(field => !(field in req.body));
 
