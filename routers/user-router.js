@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const morgan = require('morgan');
 
 const {User} = require('./../models');
 
@@ -11,18 +12,22 @@ const jsonParser = bodyParser.json();
 
 router.use(jsonParser);
 
+router.use(morgan('common'));
 
+//router.use('/register', express.static(path.join(__dirname, '../public/views/register.html'));
 
 // GET endpoint to show login page
-router.get('/register', function(req, res) {
-	res.sendFile(path.join(__dirname, '../views/register.html'));
-});
+//router.get('/register', function(req, res) {
+	//router.use(express.static('../public/views/register.html'));
+
+	//res.sendFile(path.join(__dirname, '../public/views/register.html'));
+//});
 
 
 // GET endpoint to show dashboard once user is logged in (authenticated and authorized)
-router.get('/dashboard', function(req, res) {
-	res.sendFile(path.join(__dirname, '../views/dashboard.html'));
-});
+//.get('/dashboard', function(req, res) {
+	//res.sendFile(path.join(__dirname, '../public/views/dashboard.html'));
+//});
 
 // Post to register a new user
 

@@ -1,13 +1,15 @@
 //This JS file is the client-side controller
 
-//Splash page event listener for button click on "register" button
-//Send user to registration page
 
 function submitRegistration() {		
+	const username = $("#input-username").val();
+	const password = $("#input-password").val();
+	const selfDescription = $("#input-self-description").val();
 	const settings = {
 		url: '/api/users/register',
 		type: "POST",
 		dataType: 'jsonp',
+		data: {username: username, password: password, selfDescription: selfDescription},
 		success: function(data) {
 			console.log("successfully sent information to server");
 		},
@@ -19,22 +21,12 @@ function submitRegistration() {
 	$.ajax(settings);
 }
 
-/*
-function listenForRegistrationButtonClick() {
-	$('.js-register-button').on('click', event => {
-		event.preventDefault();
-		sendToRegistrationPage();
-	})
-};
 
-listenForRegistrationButtonClick();
-
-*/
-
-
+// Event listener for submission of new user details
 function listenForRegistrationSubmit() {
-	$('.js-submit-username-password').on('submit', event => {
+	$('.js-submit-username-password').on('click', event => {
 		event.preventDefault();
+		console.log("it's running!");
 		submitRegistration();
 	});
 }
