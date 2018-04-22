@@ -10,8 +10,6 @@ function submitRegistration() {
 		dataType: 'jsonp',
 		success: function(data) {
 			console.log("successfully sent information to server");
-
-
 		},
 		error: function() {
 			alert("We're sorry but we had some trouble sending you to the registration page, please try again");

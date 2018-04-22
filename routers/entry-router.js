@@ -11,6 +11,8 @@ const router = express.Router();
 
 const {Entry} = require('../models');
 
+router.use(jsonParser);
+
 // GET endpoint 
 // Request all entries in the database
 // UNPROTECTED
@@ -92,7 +94,8 @@ router.get('/entry-by-address/:address', (req, res) => {
 
 router.post('/new-entry', (req, res) => {
 	// required fields
-	const requiredFields = ['location','author', 'landlord', 'postDate', 'reasonable', 'responsive', 'renew'];
+	console.log(req.body);
+	const requiredFields = ['location','author', 'landlord', 'reasonable', 'responsive', 'renew'];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -112,9 +115,16 @@ router.post('/new-entry', (req, res) => {
 				'country': req.body.location.country,
 				'zipcode': req.body.location.zipcode,
 			},
-			'author': req.user,
+			//
+			//
+			//
+			// Make sure to change this to req.user.username once jwt is integrated
+			//
+			//
+			//
+			'author': req.body.author,
 			'landlord': req.body.landlord,
-			'postDate': Date.now,
+			'postDate': Date(),
 			'reasonable': req.body.reasonable,
 			'responsive': req.body.responsive,
 			'renew': req.body.renew,

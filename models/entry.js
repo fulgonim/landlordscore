@@ -14,10 +14,9 @@ const entrySchema = mongoose.Schema({
 		zipcode: {type: String, required: true}
 		},
 	
-	author: {type: Object, required: true},
-
+	author: {type: String, required: true},
 	landlord: {type: String, required: true},
-	postDate: {type: Date, required: true, default: Date.now},
+	postDate: {type: Date, default: Date.now()},
 	reasonable: {type: Boolean, required: true},
 	responsive: {type: Boolean, required: true},
 	renew: {type: Boolean, required: true},

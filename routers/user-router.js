@@ -11,6 +11,8 @@ const jsonParser = bodyParser.json();
 
 router.use(jsonParser);
 
+
+
 // GET endpoint to show login page
 router.get('/register', function(req, res) {
 	res.sendFile(path.join(__dirname, '../views/register.html'));
