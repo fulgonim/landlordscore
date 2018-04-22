@@ -22,13 +22,14 @@ const {DATABASE_URL, PORT} = require('./config');
 const app = express();
 
 //Logs
-app.use(morgan('common'));
 
 // passport strategies
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+app.use(express.static('public'));
 
+app.use(morgan('common'));
 app.use('/api/users/', userRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/entries', entryRouter);
@@ -45,15 +46,6 @@ app.use(function (req, res, next) {
   }
   next();
 });
-
-
-//initial endpoint to show HTML splash page
-app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/views/index.html');
-});
-
-
-
 
 let server;
 
