@@ -14,7 +14,9 @@ const entrySchema = mongoose.Schema({
 		zipcode: {type: String, required: true}
 		},
 	
+	/*
 	author: {type: String, required: true},
+	*/
 	landlord: {type: String, required: true},
 	postDate: {type: Date, default: Date.now()},
 	reasonable: {type: Boolean, required: true},
@@ -38,7 +40,9 @@ entrySchema.methods.serialize = function() {
 	return {
 		id: this._id,
 		location: this.address,
+		/*
 		author: this.author,
+		*/
 		landlord: this.landlord,
 		postDate: this.postDate,
 		reasonable: this.reasonable,

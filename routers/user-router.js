@@ -31,6 +31,10 @@ router.use(morgan('common'));
 
 // Post to register a new user
 
+
+//router.get('/dashboard' function(req, res) {	
+//})
+
 router.post('/register', jsonParser, (req, res) => {
 	const requiredFields = ['username', 'password'];
 	const missingField = requiredFields.find(field => !(field in req.body));

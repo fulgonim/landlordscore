@@ -32,10 +32,11 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use('/api/users/', userRouter);
 app.use('/api/auth/', authRouter);
-app.use('/api/entries', entryRouter);
+app.use('/api/entries/', entryRouter);
 
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
+
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');

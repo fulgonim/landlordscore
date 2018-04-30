@@ -5,10 +5,14 @@ function submitRegistration() {
 	const username = $("#input-username").val();
 	const password = $("#input-password").val();
 	const selfDescription = $("#input-self-description").val();
+	console.log(username);
+	console.log(password);
+	console.log(selfDescription);
 	const settings = {
 		url: '/api/users/register',
-		type: "POST",
+		type: 'POST',
 		dataType: 'jsonp',
+		contentType: 'application/x-www-form-urlencoded',
 		data: {username: username, password: password, selfDescription: selfDescription},
 		success: function(data) {
 			console.log("successfully sent information to server");
@@ -20,6 +24,24 @@ function submitRegistration() {
 	};
 	$.ajax(settings);
 }
+
+/*
+
+function submitRegistration() {
+	const username = $("#input-username").val();
+	const password = $("#input-password").val();
+	const selfDescription = $("#input-self-description").val();
+	const url = '/api/users/register';
+	const data = {username: username, password: password, selfDescription: selfDescription};
+	const callback = function() {
+		console.log('the ajax call was successful!');
+	};
+
+	$.post(url, data, callback);
+}
+*/
+
+
 
 
 // Event listener for submission of new user details

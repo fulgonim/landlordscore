@@ -3,15 +3,22 @@
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const path = require('path');
 const jsonParser = bodyParser.json();
 const jwt = require('jsonwebtoken');
 
-const config = require('../config');
+
+const config = require('./../config');
 const router = express.Router();
 
-const {Entry} = require('../models');
+const {Entry} = require('./../models');
 
 router.use(jsonParser);
+
+const {localStrategy, jwtStrategy} = require('../auth');
+
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
 // GET endpoint 
 // Request all entries in the database
@@ -22,7 +29,7 @@ router.get('/all-entries', (req, res) => {
 		.then(entries => {
 			res.json({
 				entries: entries.map(
-					(entry) => blogpost.serialize())
+					(entry) => entry.serialize())
 			});
 		})
 		.catch(err => {
@@ -37,8 +44,16 @@ router.get('/all-entries', (req, res) => {
 // Get endpoint
 // Request entries by username
 // NEED TO DOUBLE CHECK THIS ROUTE, ESP. THE REQ.USER PART
+router.get('/dashboard', (req, res) => {
+	console.log(__dirname);
+	res.sendFile(path.join(__dirname, '../public/dashboard.html'));
+});
+
 
 router.get('/entry-by-username', (req, res) => {
+	
+	console.log(req.user.id);
+
 	Entry 
 		.find(req.user)
 		.then(entries => {
@@ -95,7 +110,7 @@ router.get('/entry-by-address/:address', (req, res) => {
 router.post('/new-entry', (req, res) => {
 	// required fields
 	console.log(req.body);
-	const requiredFields = ['location','author', 'landlord', 'reasonable', 'responsive', 'renew'];
+	const requiredFields = ['location', 'landlord', 'reasonable', 'responsive', 'renew'];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -122,7 +137,7 @@ router.post('/new-entry', (req, res) => {
 			//
 			//
 			//
-			'author': req.body.author,
+			//'author': req.user.username,
 			'landlord': req.body.landlord,
 			'postDate': Date(),
 			'reasonable': req.body.reasonable,
