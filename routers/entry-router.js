@@ -23,13 +23,28 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 // GET endpoint 
 // Request all entries in the database
 // UNPROTECTED
-router.get('/all-entries', (req, res) => {
+
+
+router.get('/', (req, res) => {
+	
+	// search by streetName / city
+	/*
+	if (req.query) {
+		Entry
+			.find(req.query.streetName in Entry.location.
+
+	}
+
+*/
+// search by author (username)
+
+
 	Entry
 		.find()
 		.then(entries => {
 			res.json({
 				entries: entries.map(
-					(entry) => entry.serialize())
+					(entry) => entry)
 			});
 		})
 		.catch(err => {
@@ -38,28 +53,18 @@ router.get('/all-entries', (req, res) => {
 		});
 });
 
+// GET request for a user to see all their entries
 
-
-//Dashboard endpoint
-// Get endpoint
-// Request entries by username
-// NEED TO DOUBLE CHECK THIS ROUTE, ESP. THE REQ.USER PART
-router.get('/dashboard', (req, res) => {
-	console.log(__dirname);
-	res.sendFile(path.join(__dirname, '../public/dashboard.html'));
-});
-
-
-router.get('/entry-by-username', (req, res) => {
+router.get('/:id', (req, res) => {
 	
-	console.log(req.user.id);
+	console.log(req.params.id);
+
 
 	Entry 
-		.find(req.user)
-		.then(entries => {
+		.findById(req.params.id)
+		.then(entry => {
 			res.json({
-				entries: entries.map(
-					(entry) => entry.serialize())
+				entry: entry
 			});
 		})
 		.catch(err => {
@@ -71,12 +76,45 @@ router.get('/entry-by-username', (req, res) => {
 // GET Endpoint
 // Request entries by address
 
-router.get('/entry-by-address/:address', (req, res) => {
+/* location: {
+		streetNumber: {type: String, required: true},
+		streetName: {type: String, required: true},
+		city: {type: String, required: true},
+		stateOrRegion: {type: String, required: true},
+		country: {type: String, required: true},
+		zipcode: {type: String, required: true}
+		},
+
+*/
+
+/*
+router.get('/', (req, res) => {
+
+	res.json(req.query);
+
+	const queryFields = ['streetName', 'city']
+
+	// if req.params.address in 
+	// Entry.find(req.params.address)
+
+
+
 	Entry 
 		.find(req.params.address)
-		.then()
-})
+		.then(entries => {
+			res.json({
+				entries: entries.map(
+					(entry) => entry)
+			});
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({message: 'Internal Server Error'});
+		});
+		
+});
 
+*/
 
 
 // GET Endpoint 
@@ -107,9 +145,13 @@ router.get('/entry-by-address/:address', (req, res) => {
 	comments: {type: String}
 */
 
-router.post('/new-entry', (req, res) => {
+
+// Create new landlord/address entry
+// PROTECTED ROUTE
+
+router.post('/', jwtAuth, (req, res) => {
 	// required fields
-	console.log(req.body);
+	console.log(req.user);
 	const requiredFields = ['location', 'landlord', 'reasonable', 'responsive', 'renew'];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
@@ -130,14 +172,7 @@ router.post('/new-entry', (req, res) => {
 				'country': req.body.location.country,
 				'zipcode': req.body.location.zipcode,
 			},
-			//
-			//
-			//
-			// Make sure to change this to req.user.username once jwt is integrated
-			//
-			//
-			//
-			//'author': req.user.username,
+			'author': req.user.username,
 			'landlord': req.body.landlord,
 			'postDate': Date(),
 			'reasonable': req.body.reasonable,
@@ -145,7 +180,7 @@ router.post('/new-entry', (req, res) => {
 			'renew': req.body.renew,
 			'comments': req.body.comments || ""
 		})
-		.then(entry => res.status(201).json(entry.serialize()))
+		.then(entry => res.status(201).json(entry))
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({message: 'Internal server error'});

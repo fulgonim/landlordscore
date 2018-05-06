@@ -35,7 +35,9 @@ router.use(morgan('common'));
 //router.get('/dashboard' function(req, res) {	
 //})
 
-router.post('/register', jsonParser, (req, res) => {
+// POST route for new user registration (local authentication)
+
+router.post('/', jsonParser, (req, res) => {
 	const requiredFields = ['username', 'password'];
 	const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -136,7 +138,7 @@ router.post('/register', jsonParser, (req, res) => {
 			});
 		})
 		.then(user => {
-			return res.status(201).json(user.serialize());
+			return res.status(201).json(user);
 		})
 		.catch(err => {
 			if (err.reason === 'ValidationError') {
@@ -161,9 +163,9 @@ router.post('/', jsonParser, (req, res) => {
 
 // get all users DELETE THIS BEFORE FINALIZING
 
-router.get('/all-users', (req, res) => {
+router.get('/', (req, res) => {
 	return User.find()
-		.then(users => res.json(users.map(user => user.serialize())))
+		.then(users => res.json(users.map(user => user)))
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 

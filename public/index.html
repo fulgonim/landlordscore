@@ -10,17 +10,29 @@
 </head>
 
 <body>
-	<p>Welcome to LandLordScore!</p>
-	<p>Ever wanted to know the real truth about your potential new landlord?</p>
-	<p>Ever wanted a place to vent about or celebrate your landlord?</p>
-	<p>Well here's your chance!</p>
-	<a class="js-login-button" href="./login.html">Login
-	</a>
-	<a class="js-register-button" href="./register.html">New User? Register Here!
+	<div class="js-container-1">
+		<p>Welcome to LandLordScore!</p>
+		<p>Ever wanted to know the real truth about your potential new landlord?</p>
+		<p>Ever wanted a place to vent about or celebrate your landlord?</p>
+		<p>Well here's your chance!</p>
+	</div>
 
-	</a>
-	<a class="js-dashboard-button" href="./dashboard.html">My Dashboard</a>
+	<div class="js-container-2">
+		<form class="landlord-search-form">
+			<label for="landlord-search-input">Search By Landlord:</label>
+			<input id="landlord-search-input" type="text" name="landlord-search-input">
+		</form class="landlord-search-form">
 
+		<form class="address-search-form">
+			<label>Search By Address:</label>
+			<input id="address-search-input" type="text" name="address-search-input">
+		</form>	
+	</div>
+
+	<div class="js-container-3">
+		<button class="js-login-button">Login</button>
+		<button class="js-register-button">New User? Register Here!</button>
+		<button class="js-dashboard-button">My Dashboard</button>
 
 	<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -28,7 +40,6 @@
   crossorigin="anonymous"></script>
 
 	<script type="text/javascript" src="./js/index.js"></script>
-
 
 </body>
 

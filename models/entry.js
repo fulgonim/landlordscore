@@ -14,9 +14,7 @@ const entrySchema = mongoose.Schema({
 		zipcode: {type: String, required: true}
 		},
 	
-	/*
 	author: {type: String, required: true},
-	*/
 	landlord: {type: String, required: true},
 	postDate: {type: Date, default: Date.now()},
 	reasonable: {type: Boolean, required: true},
@@ -36,13 +34,20 @@ entrySchema.virtual('address').get(function() {
 					${this.location.zipcode}`.trim();
 });
 
+entrySchema.set('toObject', {
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+})
+
+/*
 entrySchema.methods.serialize = function() {
 	return {
 		id: this._id,
 		location: this.address,
-		/*
 		author: this.author,
-		*/
 		landlord: this.landlord,
 		postDate: this.postDate,
 		reasonable: this.reasonable,
@@ -51,7 +56,7 @@ entrySchema.methods.serialize = function() {
 		comments: this.comments || ''
 	};
 }
-
+*/
 
 const Entry = mongoose.model('Entry', entrySchema);
 

@@ -14,6 +14,14 @@ const UserSchema = mongoose.Schema({
 	selfDescription: {type: String}
 });
 
+UserSchema.set('toObject', {
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+})
+/*
 UserSchema.methods.serialize = function() {
 	return {
 		id: this._id,
@@ -22,7 +30,7 @@ UserSchema.methods.serialize = function() {
 		selfDescription: this.selfDescription || ''
 	};
 }
-
+*/
 UserSchema.methods.validatePassword = function(password) {
 	return bycrypt.compare(password, this.password);
 }
