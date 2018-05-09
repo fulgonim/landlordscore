@@ -27,50 +27,49 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 
 router.get('/', (req, res) => {
 	
-	// search by streetName / city
-	/*
-	if (req.query) {
+  // search by streetName / city
+  /*
+  if (req.query) {
 		Entry
 			.find(req.query.streetName in Entry.location.
 
 	}
-
 */
+
 // search by author (username)
 
 
-	Entry
-		.find()
-		.then(entries => {
-			res.json({
-				entries: entries.map(
-					(entry) => entry)
-			});
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
+  Entry
+    .find()
+    .then(entries => {
+      res.json({
+        entries: entries.map(
+          (entry) => entry)
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({message: 'Internal server error'});
+    });
 });
 
-// GET request for a user to see all their entries
+// GET request for entry by id
 
 router.get('/:id', (req, res) => {
 	
-	console.log(req.params.id);
+  console.log(req.params.id);
 
-
-	Entry 
-		.findById(req.params.id)
-		.then(entry => {
-			res.json({
-				entry: entry
-			});
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal Server Error'});
-		});
+  Entry 
+    .findById(req.params.id)
+    .then(entry => {
+      res.json({
+        entry: entry
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({message: 'Internal Server Error'});
+    });
 });
 
 // GET Endpoint
@@ -150,41 +149,41 @@ router.get('/', (req, res) => {
 // PROTECTED ROUTE
 
 router.post('/', jwtAuth, (req, res) => {
-	// required fields
-	console.log(req.user);
-	const requiredFields = ['location', 'landlord', 'reasonable', 'responsive', 'renew'];
-	for (let i = 0; i < requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if (!(field in req.body)) {
-			const message = `Missing \`${field}\` in request body`;
-			console.error(message);
-			return res.status(400).send(message);
-		}
-	}
+  // required fields
+  console.log(req.user);
+  const requiredFields = ['location', 'landlord', 'reasonable', 'responsive', 'renew'];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
 
-	Entry
-		.create({
-			'location': {
-				'streetNumber': req.body.location.streetNumber,
-				'streetName': req.body.location.streetName,
-				'city': req.body.location.city,
-				'stateOrRegion': req.body.location.stateOrRegion,
-				'country': req.body.location.country,
-				'zipcode': req.body.location.zipcode,
-			},
-			'author': req.user.username,
-			'landlord': req.body.landlord,
-			'postDate': Date(),
-			'reasonable': req.body.reasonable,
-			'responsive': req.body.responsive,
-			'renew': req.body.renew,
-			'comments': req.body.comments || ""
-		})
-		.then(entry => res.status(201).json(entry))
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
+  Entry
+    .create({
+      'location': {
+        'streetNumber': req.body.location.streetNumber,
+        'streetName': req.body.location.streetName,
+        'city': req.body.location.city,
+        'stateOrRegion': req.body.location.stateOrRegion,
+        'country': req.body.location.country,
+        'zipcode': req.body.location.zipcode,
+      },
+      'author': req.user.username,
+      'landlord': req.body.landlord,
+      'postDate': Date(),
+      'reasonable': req.body.reasonable,
+      'responsive': req.body.responsive,
+      'renew': req.body.renew,
+      'comments': req.body.comments || ''
+    })
+    .then(entry => res.status(201).json(entry))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({message: 'Internal server error'});
+    });
 });
 
 
@@ -192,10 +191,39 @@ router.post('/', jwtAuth, (req, res) => {
 // PUT endpoint to edit existing entries
 // requires a GET request
 
+router.put('/:id', jwtAuth, (req, res) => {
+  if (!(req.params.id === req.body.id)) {
+    const message = (
+      `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`
+    );
+    console.error(message);
+    return res.status(400).json({message: message});
+  }
 
+  const toUpdate = {};
+  const updateableFields = ['location', 'landlord', 'reasonable', 'responsive', 'renew', 'comments'];
+
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      toUpdate[field] = req.body[field];
+    }
+  });
+
+  Entry
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate})
+    .then(entry => res.status(204).end())
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+
+});
 
 // DELETE Endpoint
 
+router.delete('/:id', (req, res) => {
+  Entry
+    .findByIdAndRemove(req.params.id)
+    .then(entry => res.status(204).end())
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+})
 
 
 module.exports = {router};
