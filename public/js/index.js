@@ -16,6 +16,7 @@ function submitRegistration() {
 		success: function(data) {
 			console.log("Successfully created a new user:");
 			console.log(data);
+			renderLoginPage();
 		},
 		error: function() {
 			alert("We're sorry but we had some trouble sending you to the registration page, please try again");
@@ -56,16 +57,42 @@ function submitLogin() {
 //
 //
 
-function listenForHomePageRedirect() {
-	$('.js-home-page').on('click', event => {
+function listenForHomePageButtonClick() {
+	$('.js-container-3').on('click', '.js-home-page-button', event => {
 		event.preventDefault();
-
+		renderHomePage();
 	});
+}
+
+function renderHomePage() {
+	$('.js-container-1').html(`
+		<p>Welcome to LandLordScore!</p>
+		<p>Ever wanted to know the real truth about your potential new landlord?</p>
+		<p>Ever wanted a place to vent about or celebrate your landlord?</p>
+		<p>Well here's your chance!</p>
+		`);
+	$('.js-container-2').html(`
+		<form class="landlord-search-form">
+			<label for="landlord-search-input">Search By Landlord:</label>
+			<input id="landlord-search-input" type="text" name="landlord-search-input">
+		</form class="landlord-search-form">
+
+		<form class="address-search-form">
+			<label>Search By Address:</label>
+			<input id="address-search-input" type="text" name="address-search-input">
+		</form>	
+		`);
+	$('.js-container-3').html(`
+		<button class="js-login-button">Login</button>
+		<button class="js-register-button">New User? Register Here!</button>
+		<button class="js-dashboard-button">My Dashboard</button>
+		<button class="js-all-entries-button">View All Entries</button>
+		`);
 }
 
 
 function listenForRegistrationButtonClick() {
-	$('.js-register-button').on('click', event => {
+	$('.js-container-3').on('click', '.js-register-button', event => {
 		event.preventDefault();
 		renderRegistrationPage();		
 	});
@@ -78,12 +105,19 @@ function renderRegistrationPage() {
 			<label for="new-username-input">Username</label>
 			<input id="new-username-input" type="text" name="new-username-input">
 			<label for="new-password-input">Password</label>
-			<input id="new-password-input" type="text" name="new-password-input">
+			<input id="new-password-input" type="password" name="new-password-input">
 			<label for="new-self-description-input">Self Description</label>
 			<input id="new-self-description-input" type="text" name="new-self-description">
 			<input type="submit" name="js-registration-submit" class="js-registration-submit">
 		</form>
 			`);
+	$('.js-container-3').html(`
+		<button class="js-login-button">Login</button>
+		<button class="js-register-button">New User? Register Here!</button>
+		<button class="js-dashboard-button">My Dashboard</button>
+		<button class="js-all-entries-button">View All Entries</button>
+		<button class="js-home-page-button">Home Page</button>
+		`);
 }
 
 function listenForRegistrationSubmit() {
@@ -99,7 +133,7 @@ function listenForRegistrationSubmit() {
 // Login Event Listeners
 
 function listenForLoginButtonClick() {
-	$('.js-login-button').on('click', event => {
+	$('.js-container-3').on('click', '.js-login-button',event => {
 		event.preventDefault();
 		console.log('login button clicked');
 		renderLoginPage();
@@ -114,9 +148,16 @@ function renderLoginPage() {
 			<label for="username-input">Username</label>
 			<input id="username-input" type="text" name="username-input">
 			<label for="password-input">Password</label>
-			<input id="password-input" type="text" name="password-input">
+			<input id="password-input" type="password" name="password-input">
 			<input type="submit" name="js-login-submit" class="js-login-submit">
 		</form>
+		`);
+	$('.js-container-3').html(`
+		<button class="js-login-button">Login</button>
+		<button class="js-register-button">New User? Register Here!</button>
+		<button class="js-dashboard-button">My Dashboard</button>
+		<button class="js-all-entries-button">View All Entries</button>
+		<button class="js-home-page-button">Home Page</button>
 		`);
 }
 
@@ -234,13 +275,28 @@ function displayEntries(entries) {
 }
 
 function generateEntryHtml(entry) {
+
+	const {reasonable, responsive, renew} = entry;
+	let bools = [reasonable, responsive, renew];
+
+
+	for (let i = 0; i < bools.length; i++) {
+		if (bools[i]) {
+			bools[i] = "Yes";
+		} else {
+			bools[i] = "No";
+	}
+}
+
+console.log(bools);
+
 	return `
 		<div class="js-entry">
 			<p class="js-address">${entry.location.streetNumber} ${entry.location.streetName}</p>
 			<p class="js-landlord-name">${entry.landlord}</p>
-			<p class="js-reasonable">Were they reasonable? ${entry.reasonable}</p>
-			<p class="js-responsive">Were they responsive? ${entry.responsive}</p>
-			<p class="js-renew">Would you renew your lease? ${entry.renew}</p>
+			<p class="js-reasonable">Were they reasonable? ${bools[0]}</p>
+			<p class="js-responsive">Were they responsive? ${bools[1]}</p>
+			<p class="js-renew">Would you renew your lease? ${bools[2]}</p>
 			<p class="js-comments">${entry.comments}</p>
 		</div>
 		 `
@@ -251,10 +307,12 @@ displayEntries(dummyData);
 
 listenForRegistrationButtonClick();
 listenForLoginButtonClick();
-listenForDashboardRedirect();
+listenForDashboardButtonClick();
 
 listenForRegistrationSubmit();
 listenForLoginSubmit();
+
+listenForHomePageButtonClick();
 
 
 /*
