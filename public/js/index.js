@@ -1,77 +1,72 @@
+'use strict';
+
 // AJAX CALLS
 
 function submitRegistration() {		
-	const username = $("#new-username-input").val();
-	const password = $("#new-password-input").val();
-	const selfDescription = $("#new-self-description-input").val();
-	console.log(username);
-	console.log(password);
-	console.log(selfDescription);
-	const settings = {
-		url: '/api/users',
-		type: 'POST',
-		dataType: 'json',
-		contentType: 'application/json',
-		data: JSON.stringify({username, password, selfDescription}),
-		success: function(data) {
-			console.log("Successfully created a new user:");
-			console.log(data);
-			renderLoginPage();
-		},
-		error: function() {
-			alert("We're sorry but we had some trouble sending you to the registration page, please try again");
-			console.error("User was not registered");
-		}			
-	};
-	$.ajax(settings);
+  const username = $('#new-username-input').val();
+  const password = $('#new-password-input').val();
+  const selfDescription = $('#new-self-description-input').val();
+  console.log(username);
+  console.log(password);
+  console.log(selfDescription);
+  const settings = {
+    url: '/api/users',
+    type: 'POST',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({username, password, selfDescription}),
+    success: function(data) {
+      console.log('Successfully created a new user:');
+      console.log(data);
+      renderLoginPage();
+    },
+    error: function() {
+      alert("We're sorry but we had some trouble sending you to the registration page, please try again");
+      console.error('User was not registered');
+    }			
+  };
+  $.ajax(settings);
 }
 
 function submitLogin() {
-	const username = $("#username-input").val();
-	const password = $("#password-input").val();
-	console.log(username);
-	console.log(password);
-	const settings = {
-		url: '/api/auth',
-		type: 'POST',
-		dataType: 'json',
-		contentType: 'application/json',
-		data: JSON.stringify({username, password}),
-		success: function(data) {
-			console.log("Login successful!");
-		},
-		error: function() {
-			alert("We're sorry, but we had some trouble logging you in, please try again");
-			console.error("User was not logged in");
-		}
-	};
-	$.ajax(settings);
+  const username = $('#username-input').val();
+  const password = $('#password-input').val();
+  console.log(username);
+  console.log(password);
+  const settings = {
+    url: '/api/auth',
+    type: 'POST',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({username, password}),
+    success: function(data) {
+      console.log('Login successful!');
+    },
+    error: function() {
+      alert("We're sorry, but we had some trouble logging you in, please try again");
+      console.error('User was not logged in');
+    }
+  };
+  $.ajax(settings);
 }
 
-
-// EVENT LISTENERS
-// Register Event Listeners
-//
-//
-// MAKE SURE TO USE .HTML()
-//
-//
+// Home Page Event Listeners
 
 function listenForHomePageButtonClick() {
-	$('.js-container-3').on('click', '.js-home-page-button', event => {
-		event.preventDefault();
-		renderHomePage();
-	});
+  $('.js-container-3').on('click', '.js-home-page-button', event => {
+    event.preventDefault();
+    renderHomePage();
+  });
 }
 
 function renderHomePage() {
-	$('.js-container-1').html(`
+  $('.js-container-1').html(`
 		<p>Welcome to LandLordScore!</p>
 		<p>Ever wanted to know the real truth about your potential new landlord?</p>
 		<p>Ever wanted a place to vent about or celebrate your landlord?</p>
 		<p>Well here's your chance!</p>
 		`);
-	$('.js-container-2').html(`
+  $('.js-container-2').html(`
 		<form class="landlord-search-form">
 			<label for="landlord-search-input">Search By Landlord:</label>
 			<input id="landlord-search-input" type="text" name="landlord-search-input">
@@ -82,7 +77,7 @@ function renderHomePage() {
 			<input id="address-search-input" type="text" name="address-search-input">
 		</form>	
 		`);
-	$('.js-container-3').html(`
+  $('.js-container-3').html(`
 		<button class="js-login-button">Login</button>
 		<button class="js-register-button">New User? Register Here!</button>
 		<button class="js-dashboard-button">My Dashboard</button>
@@ -90,17 +85,18 @@ function renderHomePage() {
 		`);
 }
 
+// Register New User Event Listeners
 
 function listenForRegistrationButtonClick() {
-	$('.js-container-3').on('click', '.js-register-button', event => {
-		event.preventDefault();
-		renderRegistrationPage();		
-	});
+  $('.js-container-3').on('click', '.js-register-button', event => {
+    event.preventDefault();
+    renderRegistrationPage();		
+  });
 }
 
 function renderRegistrationPage() {
-	$('.js-container-1').html(`<p class="js-registration-intro">Welcome to new user registration, to get started please fill out the form below</p>`);
-	$('.js-container-2').html(`
+  $('.js-container-1').html(`<p class="js-registration-intro">Welcome to new user registration, to get started please fill out the form below</p>`);
+  $('.js-container-2').html(`
 		<form class="js-new-user-registration-form">
 			<label for="new-username-input">Username</label>
 			<input id="new-username-input" type="text" name="new-username-input">
@@ -111,7 +107,7 @@ function renderRegistrationPage() {
 			<input type="submit" name="js-registration-submit" class="js-registration-submit">
 		</form>
 			`);
-	$('.js-container-3').html(`
+  $('.js-container-3').html(`
 		<button class="js-login-button">Login</button>
 		<button class="js-register-button">New User? Register Here!</button>
 		<button class="js-dashboard-button">My Dashboard</button>
@@ -120,30 +116,31 @@ function renderRegistrationPage() {
 		`);
 }
 
+
+
 function listenForRegistrationSubmit() {
-	console.log('this function is running');
-	$('.js-container-2').on('submit', '.js-new-user-registration-form', event => {
-		event.preventDefault();
-		console.log('registration submit button clicked!');
-		submitRegistration();
-	});
+  console.log('this function is running');
+  $('.js-container-2').on('submit', '.js-new-user-registration-form', event => {
+    event.preventDefault();
+    console.log('registration submit button clicked!');
+    submitRegistration();
+  });
 }
 
 
 // Login Event Listeners
 
 function listenForLoginButtonClick() {
-	$('.js-container-3').on('click', '.js-login-button',event => {
-		event.preventDefault();
-		console.log('login button clicked');
-		renderLoginPage();
-
-	})
+  $('.js-container-3').on('click', '.js-login-button',event => {
+    event.preventDefault();
+    console.log('login button clicked');
+    renderLoginPage();
+  });
 }
 
 function renderLoginPage() {
-	$('.js-container-1').html(`<p class="js-login-intro">Welcome to the login page, please login below to begin</p>`);
-	$('.js-container-2').html(`
+  $('.js-container-1').html(`<p class="js-login-intro">Welcome to the login page, please login below to begin</p>`);
+  $('.js-container-2').html(`
 		<form class="js-login">
 			<label for="username-input">Username</label>
 			<input id="username-input" type="text" name="username-input">
@@ -152,7 +149,7 @@ function renderLoginPage() {
 			<input type="submit" name="js-login-submit" class="js-login-submit">
 		</form>
 		`);
-	$('.js-container-3').html(`
+  $('.js-container-3').html(`
 		<button class="js-login-button">Login</button>
 		<button class="js-register-button">New User? Register Here!</button>
 		<button class="js-dashboard-button">My Dashboard</button>
@@ -162,104 +159,104 @@ function renderLoginPage() {
 }
 
 function listenForLoginSubmit() {
-	$('.js-container-2').on('submit', '.js-login', event => {
-		event.preventDefault();
-		console.log('login button clicked');
-		submitLogin();
-	})
+  $('.js-container-2').on('submit', '.js-login', event => {
+    event.preventDefault();
+    console.log('login button clicked');
+    submitLogin();
+  });
 }
 
 // Dashboard Event Listeners
 
 function listenForDashboardButtonClick() {
-	$('.js-dashboard-button').on('click', event => {
-		event.preventDefault();
-		console.log('dashboard button clicked');
-		renderDashboard();
-	});
+  $('.js-dashboard-button').on('click', event => {
+    event.preventDefault();
+    console.log('dashboard button clicked');
+    renderDashboard();
+  });
 }
 
 function renderDashboard() {
-	$('.js-container-1').html(`<p class="js-dashboard-intro">Welcome to your dashboard!</p>`);
-	$('.js-container-2').html()
+  $('.js-container-1').html(`<p class="js-dashboard-intro">Welcome to your dashboard!</p>`);
+  $('.js-container-2').html();
 }
 
 
 function getUserEntries() {
-	const settings = {
-		url: '/api/entries',
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-		success: function(data) {
-			// Insert function that takes data as an argument and creates an html element to be injected
-		},
-		error: function() {
-			alert("Sorry, we were not able to retrieve user entries");
-			console.error("User entries request failed");
-		}			
-	};
-	$.ajax(settings);
+  const settings = {
+    url: '/api/entries',
+    type: 'GET',
+    dataType: 'json',
+    contentType: 'application/json',
+    success: function(data) {
+      // Insert function that takes data as an argument and creates an html element to be injected
+    },
+    error: function() {
+      alert('Sorry, we were not able to retrieve user entries');
+      console.error('User entries request failed');
+    }			
+  };
+  $.ajax(settings);
 }
 
 
 let dummyData = [ {
-	"location": {
-		"streetNumber": "449",
-		"streetName": "Grand Street",
-		"city": "Brooklyn",
-		"stateOrRegion": "New York",
-		"country": "United States of America",
-		"zipcode": "11211"
-	},
+  'location': {
+    'streetNumber': '449',
+    'streetName': 'Grand Street',
+    'city': 'Brooklyn',
+    'stateOrRegion': 'New York',
+    'country': 'United States of America',
+    'zipcode': '11211'
+  },
 	
-	"author": "user2",
-	"landlord": "John Smith",
-	"postDate": "February 15, 2018",
-	"reasonable": true,
-	"responsive": false,
-	"renew": true,
-	"comments": "He was an okay landlord, no huge complaints, just not that responsive"
+  'author': 'user2',
+  'landlord': 'John Smith',
+  'postDate': 'February 15, 2018',
+  'reasonable': true,
+  'responsive': false,
+  'renew': true,
+  'comments': 'He was an okay landlord, no huge complaints, just not that responsive'
 },
 {
-	"location": {
-		"streetNumber": "250",
-		"streetName": "Grand Ave",
-		"city": "Queens",
-		"stateOrRegion": "New York",
-		"country": "United States of America",
-		"zipcode": "11111"
-	},
+  'location': {
+    'streetNumber': '250',
+    'streetName': 'Grand Ave',
+    'city': 'Queens',
+    'stateOrRegion': 'New York',
+    'country': 'United States of America',
+    'zipcode': '11111'
+  },
 	
-	"author": "user3",
-	"landlord": "John Jimboe",
-	"postDate": "February 15, 2018",
-	"reasonable": true,
-	"responsive": false,
-	"renew": true,
-	"comments": "He was an okay landlord, no huge complaints, just not that responsive"
+  'author': 'user3',
+  'landlord': 'John Jimboe',
+  'postDate': 'February 15, 2018',
+  'reasonable': true,
+  'responsive': false,
+  'renew': true,
+  'comments': 'He was an okay landlord, no huge complaints, just not that responsive'
 },
 {
-	"location": {
-		"streetNumber": "867",
-		"streetName": "Juniper Street",
-		"city": "Chicago",
-		"stateOrRegion": "Illinois",
-		"country": "United States of America",
-		"zipcode": "56894"
-	},
+  'location': {
+    'streetNumber': '867',
+    'streetName': 'Juniper Street',
+    'city': 'Chicago',
+    'stateOrRegion': 'Illinois',
+    'country': 'United States of America',
+    'zipcode': '56894'
+  },
 	
-	"author": "user4",
-	"landlord": "Bob Smith",
-	"postDate": "February 15, 2018",
-	"reasonable": true,
-	"responsive": false,
-	"renew": true,
-	"comments": "He was an okay landlord, no huge complaints, just not that responsive"
+  'author': 'user4',
+  'landlord': 'Bob Smith',
+  'postDate': 'February 15, 2018',
+  'reasonable': true,
+  'responsive': false,
+  'renew': true,
+  'comments': 'He was an okay landlord, no huge complaints, just not that responsive'
 }
 
 
-]
+];
 
 
 //function to take JSON entry data
@@ -268,49 +265,55 @@ let dummyData = [ {
 // entries will be an array of JSON objects
 function displayEntries(entries) {
 
-	for (let i = 0; i < entries.length; i++) {
-		console.log(generateEntryHtml(entries[i]));
-		//$('.js-container-1').append(generateEntryHtml(entries[i]));
-	}
+  for (let i = 0; i < entries.length; i++) {
+    console.log(generateEntryHtml(entries[i]));
+    //$('.js-container-1').append(generateEntryHtml(entries[i]));
+  }
 }
 
 function generateEntryHtml(entry) {
 
-	const {reasonable, responsive, renew} = entry;
-	let bools = [reasonable, responsive, renew];
+  const {reasonable, responsive, renew} = entry;
+  let bools = [reasonable, responsive, renew];
 
+  for (let i = 0; i < bools.length; i++) {
+    if (bools[i]) {
+      bools[i] = 'Yes';
+    } else {
+      bools[i] = 'No';
+    }
+  }
 
-	for (let i = 0; i < bools.length; i++) {
-		if (bools[i]) {
-			bools[i] = "Yes";
-		} else {
-			bools[i] = "No";
-	}
+  console.log(bools);
+
+  return `
+		<div class="js-entry">
+			<h3 class="js-address">${entry.location.streetNumber} ${entry.location.streetName}</h3>
+			<h2 class="js-landlord-name">${entry.landlord}</h2>
+			<p class="js-reasonable">Was ${entry.landlord} reasonable? ${bools[0]}</p>
+			<p class="js-responsive">Was ${entry.landlord} responsive? ${bools[1]}</p>
+			<p class="js-renew">Would you renew your lease? ${bools[2]}</p>
+			<p class="js-comments">Additional Comments: \n${entry.comments}</p>
+		</div>
+		 `;
 }
 
-console.log(bools);
+// If username matches the "entry.author" display these additional elements:
+// edit, delete
+function generateEditEntryHtml {
 
-	return `
-		<div class="js-entry">
-			<p class="js-address">${entry.location.streetNumber} ${entry.location.streetName}</p>
-			<p class="js-landlord-name">${entry.landlord}</p>
-			<p class="js-reasonable">Were they reasonable? ${bools[0]}</p>
-			<p class="js-responsive">Were they responsive? ${bools[1]}</p>
-			<p class="js-renew">Would you renew your lease? ${bools[2]}</p>
-			<p class="js-comments">${entry.comments}</p>
-		</div>
-		 `
 }
 
 displayEntries(dummyData);
 
 
 listenForRegistrationButtonClick();
-listenForLoginButtonClick();
-listenForDashboardButtonClick();
-
 listenForRegistrationSubmit();
+
+listenForLoginButtonClick();
 listenForLoginSubmit();
+
+listenForDashboardButtonClick();
 
 listenForHomePageButtonClick();
 
