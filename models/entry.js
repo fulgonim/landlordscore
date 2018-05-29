@@ -15,7 +15,7 @@ const entrySchema = mongoose.Schema({
 		},
 	
 	author: {type: String, required: true},
-	landlord: {type: String, required: true},
+	landlord: {type: String, required: true, index: true},
 	postDate: {type: Date, default: Date.now()},
 	reasonable: {type: Boolean, required: true},
 	responsive: {type: Boolean, required: true},
@@ -41,6 +41,8 @@ entrySchema.set('toObject', {
     delete ret.__v;
   }
 })
+
+entrySchema.index({landlord: 'text'});
 
 /*
 entrySchema.methods.serialize = function() {

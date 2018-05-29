@@ -26,21 +26,24 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 
 
 router.get('/', (req, res) => {
-	
-  // search by streetName / city
-  /*
-  if (req.query) {
-		Entry
-			.find(req.query.streetName in Entry.location.
+	const {searchTerm} = req.query;
 
+	let filter = {};
+	let projection = {};
+	let sort = 'created';
+
+  // if there is a search term when making the request, add to filter
+	if (searchTerm) {
+		filter.$text = { $search: searchTerm};
+		projection.score = {$meta: 'textScore'};
+		sort = projection;
 	}
-*/
 
-// search by author (username)
 
 
   Entry
-    .find()
+    .find(filter, projection)
+    .sort(sort)
     .then(entries => {
       res.json({
         entries: entries.map(
@@ -148,7 +151,7 @@ router.get('/', (req, res) => {
 // Create new landlord/address entry
 // PROTECTED ROUTE
 
-router.post('/', jwtAuth, (req, res) => {
+router.post('/', /*jwtAuth, */(req, res) => {
   // required fields
   console.log(req.user);
   const requiredFields = ['location', 'landlord', 'reasonable', 'responsive', 'renew'];
@@ -171,7 +174,7 @@ router.post('/', jwtAuth, (req, res) => {
         'country': req.body.location.country,
         'zipcode': req.body.location.zipcode,
       },
-      'author': req.user.username,
+      'author': /*req.user.username || */req.body.author,
       'landlord': req.body.landlord,
       'postDate': Date(),
       'reasonable': req.body.reasonable,

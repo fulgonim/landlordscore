@@ -67,15 +67,11 @@ function renderHomePage() {
 		<p>Well here's your chance!</p>
 		`);
   $('.js-container-2').html(`
-		<form class="landlord-search-form">
-			<label for="landlord-search-input">Search By Landlord:</label>
-			<input id="landlord-search-input" type="text" name="landlord-search-input">
-		</form class="landlord-search-form">
-
-		<form class="address-search-form">
-			<label>Search By Address:</label>
-			<input id="address-search-input" type="text" name="address-search-input">
-		</form>	
+		<form class="js-entry-search-form">
+      <label for="js-entry-search-input">Search</label>
+      <input id="js-entry-search-input" type="text" name=" js-entry-search-input">
+      <input class="js-entry-search-submit" type="submit" name="js-entry-search-submit">
+    </form>
 		`);
   $('.js-container-3').html(`
 		<button class="js-login-button">Login</button>
@@ -119,7 +115,6 @@ function renderRegistrationPage() {
 
 
 function listenForRegistrationSubmit() {
-  console.log('this function is running');
   $('.js-container-2').on('submit', '.js-new-user-registration-form', event => {
     event.preventDefault();
     console.log('registration submit button clicked!');
@@ -181,12 +176,21 @@ function renderDashboard() {
   $('.js-container-2').html();
 }
 
+function listenForSearch() {
+  $('.js-container-2').on('click', '.js-entry-search-submit', event => {
+    event.preventDefault();
+    getUserEntries();
+  })
+}
 
 function getUserEntries() {
+  const searchTerm = $('#js-entry-search-input').val();
+  console.log(searchTerm);
   const settings = {
     url: '/api/entries',
     type: 'GET',
     dataType: 'json',
+    data: JSON.stringify({searchTerm}),
     contentType: 'application/json',
     success: function(data) {
       // Insert function that takes data as an argument and creates an html element to be injected
@@ -300,9 +304,11 @@ function generateEntryHtml(entry) {
 
 // If username matches the "entry.author" display these additional elements:
 // edit, delete
+/*
 function generateEditEntryHtml {
 
 }
+*/
 
 displayEntries(dummyData);
 
@@ -316,6 +322,8 @@ listenForLoginSubmit();
 listenForDashboardButtonClick();
 
 listenForHomePageButtonClick();
+
+listenForSearch();
 
 
 /*

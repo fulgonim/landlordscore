@@ -1,4 +1,6 @@
-{
+[
+	{
+	"_id": 000000000000000000000000,
 	"location": {
 		"streetNumber": "449",
 		"streetName": "Grand Street",
@@ -8,11 +10,52 @@
 		"zipcode": "11211"
 	},
 	
-	"author": "user2",
+	"author": "user1",
 	"landlord": "John Smith",
 	"postDate": "February 15, 2018",
 	"reasonable": true,
 	"responsive": false,
 	"renew": true,
 	"comments": "He was an okay landlord, no huge complaints, just not that responsive"
+},
+
+{
+	"_id": 000000000000000000000001,
+	"location": {
+		"streetNumber": "559",
+		"streetName": "Hand Street",
+		"city": "Queens",
+		"stateOrRegion": "New York",
+		"country": "United States of America",
+		"zipcode": "12342"
+	},
+	
+	"author": "user2",
+	"landlord": "John Lithgow",
+	"postDate": "February 16, 2018",
+	"reasonable": true,
+	"responsive": false,
+	"renew": true,
+	"comments": "He was a terrible landlord, no huge complaints, just not that responsive"
+},
+
+{
+	"_id": 000000000000000000000002,
+	"location": {
+		"streetNumber": "448",
+		"streetName": "Band Street",
+		"city": "Bronx",
+		"stateOrRegion": "New York",
+		"country": "United States of America",
+		"zipcode": "11222"
+	},
+	
+	"author": "user3",
+	"landlord": "Bob Smith",
+	"postDate": "February 17, 2018",
+	"reasonable": true,
+	"responsive": false,
+	"renew": true,
+	"comments": "He was an average landlord, no huge complaints, just not that responsive"
 }
+]
