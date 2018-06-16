@@ -193,6 +193,8 @@ function getUserEntries() {
     data: JSON.stringify({searchTerm}),
     contentType: 'application/json',
     success: function(data) {
+      console.log(data);
+      displayEntries(data);
       // Insert function that takes data as an argument and creates an html element to be injected
     },
     error: function() {
@@ -268,15 +270,19 @@ let dummyData = [ {
 // inject this element into the DOM
 // entries will be an array of JSON objects
 function displayEntries(entries) {
-
+  console.log("displayEntries function is firing");
+  let entriesArray = [];
+  //console.log(entriesArray[0]);
   for (let i = 0; i < entries.length; i++) {
-    console.log(generateEntryHtml(entries[i]));
+    generateEntryHtml(entries[i]);
+    //console.log(entriesArray);
+    //console.log(generateEntryHtml(entries[i]));
     //$('.js-container-1').append(generateEntryHtml(entries[i]));
   }
 }
 
 function generateEntryHtml(entry) {
-
+  console.log("generateEntryHtml function is firing");
   const {reasonable, responsive, renew} = entry;
   let bools = [reasonable, responsive, renew];
 
@@ -310,7 +316,7 @@ function generateEditEntryHtml {
 }
 */
 
-displayEntries(dummyData);
+//displayEntries(dummyData);
 
 
 listenForRegistrationButtonClick();
